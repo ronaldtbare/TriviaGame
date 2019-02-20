@@ -1,0 +1,43 @@
+body{
+    background-color: lightskyblue;
+    background-image: url("../images/neon.png");
+    
+}
+
+.container{
+    background-color: rgb(253, 195, 88);
+    padding: 30px;
+}
+
+.mainTitle{
+    font-size:60px;
+    text-align: center;
+    color: purple;
+
+}
+
+.timer{
+    text-align:center;
+    height:60px;
+
+}
+
+.question1{
+    text-align: center;
+}
+
+.answers{
+    text-align: center;
+}
+
+
+h3:hover{
+    color:white;
+    background-color: gray;
+}
+
+
+
+
+
+

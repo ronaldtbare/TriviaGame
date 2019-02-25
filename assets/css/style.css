@@ -30,6 +30,9 @@ body{
     text-align: center;
 }
 
+.answersCol{
+    text-align: center;
+}
 
 h3:hover{
     color:white;

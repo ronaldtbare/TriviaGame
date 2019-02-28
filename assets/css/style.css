@@ -16,6 +16,10 @@ body{
 
 }
 
+.button{
+    text-align:center;
+}
+
 .timer{
     text-align:center;
     height:120px;
@@ -31,6 +35,10 @@ body{
 }
 
 .answersCol{
+    text-align: center;
+}
+
+.imageCol{
     text-align: center;
 }
 

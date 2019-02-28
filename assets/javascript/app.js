@@ -1,77 +1,127 @@
 $(document).ready(function () {
-   
-// Global variables
+
+    // Global variables
     var countdown;
-    var questionCounter = 0;
-    var number = 1;
-
-//Questions
-
-var questions = [
-    {question: "What was the suit color of the Greatest American Hero?",
-    answers: ["red", "green", "blue", "orange"],
-    rightAnswer: "red",
-    pic: "assets/images/hero.jpg"},
-
-    {question: "What was the game for Atari 2600 based on Raiders of the Lost Ark?",
-    answers: ["Sidewinder", "Alpha Lock", "Pitfall", "Raiders"],
-    rightAnswer: "Pitfall",
-    pic: "assets/images/pitfall.jpg"},        
-
-    {question: "What was the tv show that featered a private eye that lived in Hawaii?",
-    answers: ["Wonder Years", "Rosanne", "Lasiter", "Magnum P.I."],
-    rightAnswer: "Magnum P.I.",
-    pic: "assets/images/magnum.jpg"},
-
-]
+    var correctAnswer;
+    var holder;
     
+    var questionsCorrect = 0;
+    var questionsIncorrect = 0;
+    var arrayItemNumber = 0;
 
-    function timer() {
-        
-        clearInterval(countdown);
-        var counterValue = 15;
-        $(".timerText").text(counterValue);
-        function counter() {
-            
-            counterValue--;
-            console.log(counterValue);
-            $(".timerText").text(counterValue);
-                if (counterValue <= 0) {
-                    clearInterval(countdown);
-                }
-        }
-        countdown = setInterval(counter, 1000);
-    }
+    //Questions
 
+    var questions = [
+        {
+            question: "What was the suit color of the Greatest American Hero?",
+            answers: ["red", "green", "blue", "orange"],
+            rightAnswer: "red",
+            pic: "assets/images/hero.jpg"
+        },
+
+        {
+            question: "What was the game for Atari 2600 based on Raiders of the Lost Ark?",
+            answers: ["Sidewinder", "Alpha Lock", "Pitfall", "Raiders"],
+            rightAnswer: "Pitfall",
+            pic: "assets/images/pitfall.jpg"
+        },
+
+        {
+            question: "What was the tv show that featered a private eye that lived in Hawaii?",
+            answers: ["Wonder Years", "Rosanne", "Air Wolf", "Magnum P.I."],
+            rightAnswer: "Magnum P.I.",
+            pic: "assets/images/magnum.jpg"
+        },
+
+        {
+            question: "What was the music band the had the hit song 'Walk Like An Egyptian?",
+            answers: ["Flock of Seagulls", "Bangles", "Men At Work", "J.Giles Band"],
+            rightAnswer: "Bangles",
+            pic: "assets/images/bangles.jpg"
+        },
+
+        {
+            question: "What popular article of clothing had the brand name Members Only?",
+            answers: ["hat", "jacket", "jeans", "shoes"],
+            rightAnswer: "jacket",
+            pic: "assets/images/jacket.jpg"
+        },
+    ]
 
     function showCorrect() {
-        
+
+        questionsCorrect++;
         $("#question").text("CORRECT!");
-        $("#answer1").text("");
+        $("#answer1").text("The correct answer is " + correctAnswer);
         $("#answer2").text("");
         $("#answer3").text("");
         $("#answer4").text("");
+        $(".imageCol").append("<img class='image' src=" + holder.pic + ">");
+        delay();
 
     }
 
     function showIncorrect() {
-        
+        questionsIncorrect++;
         $("#question").text("Incorrect.");
-        $("#answer1").text("");
+        $("#answer1").text("The correct answer is " + correctAnswer);
         $("#answer2").text("");
         $("#answer3").text("");
         $("#answer4").text("");
+        $(".imageCol").append("<img class='image' src=" + holder.pic + ">");
+        delay();
+
     }
 
-    function displayQuestion(number) {
+    function delay() {
+        setTimeout(function () {
+            displayQuestion();
+        }, 2000);
+    }
 
+    function showSummary() {
+        $(".timerLabel").empty();
+        clearInterval(countdown);
+        $("#question").text("Score Time");
+        $("#answer1").text("");
+        $("#answer2").text("CORRECT answers: " + questionsCorrect);
+        $("#answer3").text("INCORRECT answers: " + questionsIncorrect);
+        $("#answer4").text("Score: " + questionsCorrect * 100 + "pts");
+        $(".image").remove();
         
+    }
 
-        var holder = questions[number];
-            // console.log(questions[number].question);
-            // console.log(number);
-            // console.log(holder.question);
+    function displayQuestion() {
+        
+        $(".image").remove();
+        $(".button").remove();
 
+        if (arrayItemNumber > questions.length-1) {
+            showSummary();
+        }
+        console.log("arrayItemNumber: " + arrayItemNumber);
+      
+        //start timer
+
+        clearInterval(countdown);
+        var counterValue = 10;
+        $(".timerText").text(counterValue);
+        function counter() {
+
+            counterValue--;
+            $(".timerText").text(counterValue);
+            if (counterValue <= 0) {
+                clearInterval(countdown);
+                // showIncorrect();
+                // delay();
+            }
+        }
+        countdown = setInterval(counter, 1000);
+
+        holder = questions[arrayItemNumber];
+
+        console.log(holder);
+        
         // display question and answers
         $("#question").text(holder.question);
         $("#answer1").text(holder.answers[0]);
@@ -79,50 +129,39 @@ var questions = [
         $("#answer3").text(holder.answers[2]);
         $("#answer4").text(holder.answers[3]);
         
-        //start timer
-        timer();
-
         //evaluate selection
-       var correctAnswer = holder.rightAnswer;
-        $(".answers").on("click", function(){
-            console.log("answer was clicked. correct answer is " + correctAnswer);
-            $(".timerText").text("");
-            if ( $(this).text() === correctAnswer){
-                showCorrect();
-                console.log("IS "+ correctAnswer);
-                $(".answersCol").empty().append("<h2>The correct answer is: "+correctAnswer+"</h2>");
-                $(".answersCol").append("<img src="+holder.pic+">");
-              
+        correctAnswer = holder.rightAnswer;
+        console.log("correct answer is "+correctAnswer);
+        $(".answers").on("click", function () {
+
+            if ($(this).text() === correctAnswer && counterValue >0) {
                
+                showCorrect();
             }
 
-            else{
+            else {
+               
                 showIncorrect();
-                console.log("NOT "+ correctAnswer);
-                $(".answersCol").empty().append("<h2>The correct answer is: "+correctAnswer+"</h2>");
-                $(".answersCol").append("<img src="+holder.pic+">");
-                
-                
             }
 
-            
         });
+        
+        arrayItemNumber++;
+        console.log("correct ",questionsCorrect);
+        console.log("incorrect ",questionsIncorrect);
+        
     }
 
+   
+    //main
 
-//main
+    $(".button").on("click", function () {
+        
 
-
-
-    displayQuestion(questionCounter);
-
- 
-
+        displayQuestion();
 
 
-
-
-
+    })
 
 
 });

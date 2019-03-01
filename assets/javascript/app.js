@@ -5,6 +5,8 @@ $(document).ready(function () {
     var correctAnswer;
     var holder;
     
+    var roundTime = 15;
+    var counterValue = roundTime;
     var questionsCorrect = 0;
     var questionsIncorrect = 0;
     var arrayItemNumber = 0;
@@ -73,10 +75,18 @@ $(document).ready(function () {
 
     }
 
+    function counter() {
+        counterValue--;
+        $(".timerText").text(counterValue);
+        if (counterValue === 0) {
+            console.log('remove counter');
+            clearInterval(countdown);
+            showIncorrect();
+        }
+    }
+
     function delay() {
-        setTimeout(function () {
-            displayQuestion();
-        }, 2000);
+        setTimeout(displayQuestion, 2000);
     }
 
     function showSummary() {
@@ -88,34 +98,22 @@ $(document).ready(function () {
         $("#answer3").text("INCORRECT answers: " + questionsIncorrect);
         $("#answer4").text("Score: " + questionsCorrect * 100 + "pts");
         $(".image").remove();
-        
     }
 
     function displayQuestion() {
-        
         $(".image").remove();
         $(".button").remove();
 
         if (arrayItemNumber > questions.length-1) {
             showSummary();
+            return;
         }
         console.log("arrayItemNumber: " + arrayItemNumber);
       
         //start timer
-
         clearInterval(countdown);
-        var counterValue = 10;
+        counterValue = roundTime;
         $(".timerText").text(counterValue);
-        function counter() {
-
-            counterValue--;
-            $(".timerText").text(counterValue);
-            if (counterValue <= 0) {
-                clearInterval(countdown);
-                // showIncorrect();
-                // delay();
-            }
-        }
         countdown = setInterval(counter, 1000);
 
         holder = questions[arrayItemNumber];
@@ -132,36 +130,33 @@ $(document).ready(function () {
         //evaluate selection
         correctAnswer = holder.rightAnswer;
         console.log("correct answer is "+correctAnswer);
-        $(".answers").on("click", function () {
-
-            if ($(this).text() === correctAnswer && counterValue >0) {
-               
-                showCorrect();
-            }
-
-            else {
-               
-                showIncorrect();
-            }
-
-        });
         
         arrayItemNumber++;
+        console.log("after",arrayItemNumber);
         console.log("correct ",questionsCorrect);
         console.log("incorrect ",questionsIncorrect);
         
     }
 
+    $(document).on("click", ".answers", function () {
+
+        if ($(this).text() === correctAnswer ) {
+            
+            showCorrect();
+        }
+
+        else {
+            
+            showIncorrect();
+        }
+
+    });
+
    
     //main
-
     $(".button").on("click", function () {
-        
-
         displayQuestion();
-
-
-    })
+    });
 
 
 });

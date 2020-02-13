@@ -48,6 +48,20 @@ $(document).ready(function () {
             rightAnswer: "jacket",
             pic: "assets/images/jacket.jpg"
         },
+
+        {
+            question: "What was the name of Gargamel's cat?",
+            answers: ["Midnight", "Jax", "Felix", "Azrael"],
+            rightAnswer: "Azrael",
+            pic: "assets/images/gargamel.jpg"
+        },
+
+        {
+            question: "What band had the hit song \"Round and Round\"?",
+            answers: ["Ratt", "Whitesnake", "Poison", "Molly Hatchet"],
+            rightAnswer: "Ratt",
+            pic: "assets/images/ratt.jpg"
+        },
     ]
 
     function showCorrect() {
@@ -92,7 +106,7 @@ $(document).ready(function () {
     function showSummary() {
         $(".timerLabel").empty();
         clearInterval(countdown);
-        $("#question").text("Score Time");
+        $("#question").text("Completed!");
         $("#answer1").text("");
         $("#answer2").text("CORRECT answers: " + questionsCorrect);
         $("#answer3").text("INCORRECT answers: " + questionsIncorrect);

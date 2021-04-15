@@ -112,10 +112,8 @@ $(document).ready(function () {
         $("#answer3").text("INCORRECT answers: " + questionsIncorrect);
         $("#answer4").text("Score: " + questionsCorrect * 100 + "pts");
         $(".image").remove();
+        <button onClick="window.location.href=window.location.href">Refresh Page</button>
         
-         $(".button").on("click", function () {
-        displayQuestion();
-    });
     }
 
     function displayQuestion() {
